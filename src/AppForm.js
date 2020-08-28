@@ -3,17 +3,22 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
+const defaultTopics = [
+  "Coffee",
+  "Donald Trump",
+  "Coronavirus",
+  "MLB",
+  "San Francisco",
+  "Michelle Obama"
+];
+
+var randomTopic = defaultTopics[Math.floor(Math.random()*defaultTopics.length)];
+
 export default function AppForm(props) {
 
-  const setField1 = (event) => {
+  const setTopic = (event) => {
     props.updater(
-      {   ...props.state, field1Value: event.target.value }
-    );
-  };
-
-  const setField2 = (event) => {
-    props.updater(
-      {   ...props.state, field2Value: event.target.value }
+      {   ...props.state, topic: event.target.value }
     );
   };
 
@@ -24,7 +29,7 @@ export default function AppForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Fill out this form:
+        {"Let's see how the world feels about..."}
       </Typography>
       <ValidatorForm
           onError={errors => console.log(errors)}
@@ -33,30 +38,16 @@ export default function AppForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
             <TextValidator
-                label="Text field 1"
-                placeholder="Placeholder"
-                onChange={setField1}
+                label="Enter a topic:"
+                placeholder={randomTopic}
+                onChange={setTopic}
                 name="aField"
-                value={props.state.field1Value}
+                value={props.state.topic}
                 validators={['required']}
                 errorMessages={['This field is required!']}
                 variant="outlined"
-                required
+                color="secondary"
             />
-        </Grid>
-        <Grid item xs={12} md={6}>
-            <TextValidator
-                label="Text field 2"
-                placeholder="Placeholder"
-                onChange={setField2}
-                name="aField2"
-                value={props.state.field2Value}
-                validators={['required']}
-                errorMessages={['This field is required!']}
-                variant="outlined"
-                required
-            />
-
         </Grid>
       </Grid>
       </ValidatorForm>
